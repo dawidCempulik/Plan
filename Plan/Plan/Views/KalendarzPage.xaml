@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plan.Views.KalendarzPage"
+             xmlns:vm="clr-namespace:Plan.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:KalendarzViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid x:Name="weekGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Text="" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" Text="Pon" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="2" Text="Wt" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="3" Text="Śr" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="4" Text="Czw" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="5" Text="Pt" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="6" Text="Sob" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="7" Text="Nie" VerticalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
