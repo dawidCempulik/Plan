@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plan.Views.DayCalendarPage"
+             xmlns:vm="clr-namespace:Plan.ViewModels"
+             xmlns:model="clr-namespace:Plan.Models"  
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:DayCalendarViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center" HorizontalOptions="Fill">
+                <Button
+                    WidthRequest="90"
+                    HeightRequest="40"
+                    Text="&lt;"
+                    Command="{Binding DayBackCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" />
+
+                <Label Text="{Binding DateLabel}" />
+
+                <Button 
+                    WidthRequest="90"
+                    HeightRequest="40"
+                    Text=">"
+                    Command="{Binding DayForwardCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" />
+            </FlexLayout>
+            <ListView ItemsSource="{Binding CalendarEventsPageList}" ItemSelected="OnListViewItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding TimeLabel}"
+                      Detail="{Binding Text}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
