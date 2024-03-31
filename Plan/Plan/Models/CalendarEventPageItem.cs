@@ -7,10 +7,12 @@ namespace Plan.Models
     public class CalendarEventPageItem
     {
         public string Text { get; set; }
+        public string Description { get; set; }
         public string TimeLabel { get; set; }
 
-        public CalendarEventPageItem(string text, string timeLabel) { 
+        public CalendarEventPageItem(string text, string description, string timeLabel) { 
             Text = text;
+            Description = description;
             TimeLabel = timeLabel;
         }
     }

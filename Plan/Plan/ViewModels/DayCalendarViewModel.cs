@@ -11,7 +11,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 
 /*
- * TODO: Add a page for adding events and make the item cell as it actually should be
+ * TODO: Add a page for adding events
  */
 
 namespace Plan.ViewModels
@@ -78,7 +78,7 @@ namespace Plan.ViewModels
 
             foreach (CalendarEvent item in SelectedEvents)
             {
-                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Text, item.DateTime.TimeOfDay.ToString()));
+                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Text, item.Description, item.DateTime.TimeOfDay.ToString()));
             }
 
             OnPropertyChanged(nameof(CalendarEventsPageList));
