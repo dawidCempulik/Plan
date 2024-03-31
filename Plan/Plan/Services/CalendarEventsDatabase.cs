@@ -29,11 +29,6 @@ namespace Plan.Services
             return Database.Table<CalendarEvent>().ToListAsync();
         }
 
-        public Task<List<CalendarEvent>> GetItemsByDateAsync(DateTime date)
-        {
-            return Database.Table<CalendarEvent>().Where(i => i.DateTimeStart.Date == date).ToListAsync();
-        }
-
         public Task<CalendarEvent> GetItemAsync(int id)
         {
             return Database.Table<CalendarEvent>().Where(i => i.Id == id).FirstOrDefaultAsync();

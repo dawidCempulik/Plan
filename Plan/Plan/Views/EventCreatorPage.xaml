@@ -4,8 +4,8 @@
              x:Class="Plan.Views.EventCreatorPage"
              Shell.PresentationMode="ModalAnimated"
              xmlns:vm="clr-namespace:Plan.ViewModels"
-             xmlns:model="clr-namespace:Plan.Models"  
-             BackgroundColor="white">
+             xmlns:model="clr-namespace:Plan.Models"
+             BackgroundColor="#333">
 
     <ContentPage.BindingContext>
         <vm:EventCreatorViewModel />
@@ -71,6 +71,8 @@
                 <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"/>
                 <Button Text="Zapisz" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
+
+            <Button Text="Usun" Command="{Binding RemoveCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding RemoveButtonEnabled}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

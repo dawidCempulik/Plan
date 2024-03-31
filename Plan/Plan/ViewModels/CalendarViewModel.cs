@@ -30,9 +30,9 @@ namespace Plan.ViewModels
         private List<DateTime> GetDaysOfWeek(DateTime date)
         {
             date = date.Date;
-            int currentDay = (int)date.DayOfWeek - 1;
-            if (currentDay < 0) currentDay += 7;
-            DateTime monday = date.AddDays(-currentDay);
+            int currentDayOfWeek = (int)date.DayOfWeek - 1;
+            if (currentDayOfWeek < 0) currentDayOfWeek += 7;
+            DateTime monday = date.AddDays(-currentDayOfWeek);
             List<DateTime> daysThisWeek = Enumerable.Range(0, 7)
                 .Select(d => monday.AddDays(d))
                 .ToList();

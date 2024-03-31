@@ -4,7 +4,8 @@
              x:Class="Plan.Views.CalendarPage"
              xmlns:vm="clr-namespace:Plan.ViewModels"
              xmlns:model="clr-namespace:Plan.Models"  
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="#333">
 
     <ContentPage.BindingContext>
         <vm:CalendarViewModel />

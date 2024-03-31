@@ -18,6 +18,7 @@ namespace Plan.ViewModels
         private DateTime dateStart;
         private TimeSpan timeEnd;
         private DateTime dateEnd;
+        private bool removeButtonEnabled;
         private bool[] repeat;
 
         public EventCreatorViewModel()
@@ -25,6 +26,7 @@ namespace Plan.ViewModels
 
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
+            RemoveCommand = new Command(OnRemove);
 
             DateStart = DateTime.Now;
             DateEnd = DateTime.Now;
@@ -58,8 +60,7 @@ namespace Plan.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            return !String.IsNullOrWhiteSpace(text);
         }
 
         public int ItemId
@@ -70,6 +71,7 @@ namespace Plan.ViewModels
                 if (value != 0)
                 {
                     SetProperty(ref itemId, value);
+                    RemoveButtonEnabled = true;
                     Title = "Edytowanie wydarzenia";
                     _ = LoadItemInfo(ItemId);
                 }
@@ -97,7 +99,11 @@ namespace Plan.ViewModels
         public DateTime DateStart
         {
             get => dateStart;
-            set => SetProperty(ref dateStart, value);
+            set
+            {
+                SetProperty(ref dateStart, value);
+                DateEnd = value;
+            }
         }
 
         public TimeSpan TimeEnd
@@ -112,6 +118,12 @@ namespace Plan.ViewModels
             set => SetProperty(ref dateEnd, value);
         }
 
+        public bool RemoveButtonEnabled
+        {
+            get => removeButtonEnabled;
+            set => SetProperty(ref removeButtonEnabled, value);
+        }
+
         public bool[] Repeat
         {
             get => repeat;
@@ -120,6 +132,7 @@ namespace Plan.ViewModels
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
+        public Command RemoveCommand { get; }
 
         private async void OnCancel()
         {
@@ -146,6 +159,21 @@ namespace Plan.ViewModels
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+        }
+
+        private async void OnRemove()
+        {
+            if (ItemId == 0) return;
+
+
+            CalendarEventsDatabase database = await CalendarEventsDatabase.Instance;
+            CalendarEvent calendarEvent = await database.GetItemAsync(ItemId);
+
+            await database.DeleteItemAsync(calendarEvent);
+
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
+
         }
     }
 }

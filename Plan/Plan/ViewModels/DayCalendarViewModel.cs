@@ -38,8 +38,6 @@ namespace Plan.ViewModels
 
             CurrentDate = DateTime.Now.Date;
             DateLabel = DateToString(DateTime.Now);
-
-            _ = LoadEventsByDay();
         }
 
         private string DateToString(DateTime date)
@@ -78,11 +76,34 @@ namespace Plan.ViewModels
             CalendarEventsDatabase database = await CalendarEventsDatabase.Instance;
 
             CalendarEventsPageList.Clear();
-            SelectedEvents = await database.GetItemsByDateAsync(CurrentDate);
+            SelectedEvents = new List<CalendarEvent>();
+
+            //SelectedEvents = await database.GetItemsByDateAsync(CurrentDate);
+            List<CalendarEvent> events = await database.GetItemsAsync();
+
+            int currentDayOfWeek = (int)CurrentDate.DayOfWeek - 1;
+            if (currentDayOfWeek < 0) currentDayOfWeek += 7;
+
+            foreach (CalendarEvent calendarEvent in events)
+            {
+                if (calendarEvent.DateTimeStart.Date == CurrentDate || calendarEvent.Repeat.Contains(currentDayOfWeek.ToString()))
+                {
+                    SelectedEvents.Add(calendarEvent);
+                }
+            }
+            
+            if (SelectedEvents.Count == 0) 
+            {
+                CalendarEventsPageList.Add(new CalendarEventPageItem(0, "Nie ma wydarzeń tego dnia", "", "", ""));
+            }
+            else
+            {
+                SelectedEvents = SelectedEvents.OrderBy(item => item.DateTimeStart.TimeOfDay).ToList();
+            }
 
             foreach (CalendarEvent item in SelectedEvents)
             {
-                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Id, item.Text, item.Description, TimeToString(item.DateTimeStart), item.Repeat));
+                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Id, item.Text, item.Description, TimeToString(item.DateTimeStart), TimeToString(item.DateTimeEnd)));
             }
 
             OnPropertyChanged(nameof(CalendarEventsPageList));
@@ -99,6 +120,8 @@ namespace Plan.ViewModels
         private async void ExecuteEventTappedCommand(CalendarEventPageItem item)
         {
             if (item == null)
+                return;
+            if (item.Id == 0) 
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
