@@ -71,10 +71,8 @@ namespace Plan.ViewModels
         {
             CalendarEventsDatabase database = await CalendarEventsDatabase.Instance;
 
-            Console.WriteLine("Connected (?)");
             CalendarEventsPageList.Clear();
             SelectedEvents = await database.GetItemsAsync();
-            Console.WriteLine("Got items (?)");
 
             foreach (CalendarEvent item in SelectedEvents)
             {
@@ -82,7 +80,6 @@ namespace Plan.ViewModels
             }
 
             OnPropertyChanged(nameof(CalendarEventsPageList));
-            Console.WriteLine("Succeded!");
         }
     }
 }
