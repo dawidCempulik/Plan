@@ -20,9 +20,10 @@ namespace Plan.Views
             Title = "Plan dnia";
         }
 
-        private async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs args)
+        protected override void OnAppearing()
         {
-            (sender as ListView).SelectedItem = null;
+            _ = ((DayCalendarViewModel)BindingContext).LoadEventsByDay();
+            base.OnAppearing();
         }
     }
 }

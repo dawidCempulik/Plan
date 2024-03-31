@@ -5,7 +5,7 @@
              Shell.PresentationMode="ModalAnimated"
              xmlns:vm="clr-namespace:Plan.ViewModels"
              xmlns:model="clr-namespace:Plan.Models"  
-             Title="{Binding Title}">
+             BackgroundColor="white">
 
     <ContentPage.BindingContext>
         <vm:EventCreatorViewModel />
@@ -13,7 +13,7 @@
     
     <ContentPage.Content>
         <StackLayout Padding="5">
-            <Label Text="Nowe wydarzenie" FontSize="Title"/>
+            <Label Text="{Binding Title}" FontSize="Title"/>
             
             <Label Text="Tekst" FontSize="Medium"/>
             <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
@@ -24,19 +24,48 @@
             <FlexLayout JustifyContent="SpaceEvenly">
                 <StackLayout>
                     <Label Text="Od" FontSize="Medium"/>
-                    <TimePicker Time="{Binding TimeStart}"/>
+                    <TimePicker Time="{Binding TimeStart, Mode=TwoWay}"/>
                     <DatePicker Date="{Binding DateStart, Mode=TwoWay}"/>
                 </StackLayout>
                 <StackLayout>
                     <Label Text="Do" FontSize="Medium"/>
-                    <TimePicker Time="{Binding TimeEnd}"/>
+                    <TimePicker Time="{Binding TimeEnd, Mode=TwoWay}"/>
                     <DatePicker Date="{Binding DateEnd, Mode=TwoWay}"/>
                 </StackLayout>
             </FlexLayout>
 
             <Label Text="Powtarzać" FontSize="Medium"/>
-            <Label Text="Zimplementowac!"/>
 
+            <FlexLayout JustifyContent="SpaceEvenly">
+                <StackLayout>
+                    <Label Text="Pon" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[0], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Wt" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[1], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Śr" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[2], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Czw" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[3], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Pt" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[4], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Sob" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[5], Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Nie" HorizontalOptions="Center"/>
+                    <CheckBox IsChecked="{Binding Repeat[6], Mode=TwoWay}"/>
+                </StackLayout>
+            </FlexLayout>
 
             <StackLayout Orientation="Horizontal">
                 <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"/>

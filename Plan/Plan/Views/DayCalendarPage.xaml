@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Plan.Views.DayCalendarPage"
              xmlns:vm="clr-namespace:Plan.ViewModels"
              xmlns:model="clr-namespace:Plan.Models"  
@@ -35,39 +36,37 @@
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="White" />
             </FlexLayout>
-            <ListView ItemsSource="{Binding CalendarEventsPageList}" ItemSelected="OnListViewItemSelected" RowHeight="50">
+            <ListView ItemsSource="{Binding CalendarEventsPageList}" SelectionMode="None" RowHeight="55">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid RowSpacing="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"/>
-                                </Grid.RowDefinitions>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <Label  Text="{Binding TimeStartLabel}"
+                                            WidthRequest="50"
+                                            HeightRequest="20"/>
 
+                                    <Label  Text="{Binding TimeEndLabel}"
+                                            WidthRequest="50"
+                                            HeightRequest="20"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label  Text="{Binding Text}" FontSize="Body"
+                                            HeightRequest="20"/>
 
-                                <Label  Text="{Binding TimeStartLabel}"
-                                        HeightRequest="1"
-                                        Grid.Column="0" Grid.ColumnSpan="1"
-                                        Grid.Row="0"/>
+                                    <Label  Text="{Binding Description}"
+                                            HeightRequest="20"/>
+                                </StackLayout>
 
-                                <Label  Text="{Binding TimeEndLabel}"
-                                        HeightRequest="1"
-                                        Grid.Column="0" Grid.ColumnSpan="1"
-                                        Grid.Row="1"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        NumberOfTapsRequired="2"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DayCalendarViewModel}}, Path=EventTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
 
-                                <Label  Text="{Binding Text}"
-                                        HeightRequest="1"
-                                        Grid.Column="1" Grid.ColumnSpan="5"
-                                        Grid.Row="0"/>
-
-                                <Label  Text="{Binding Description}"
-                                        HeightRequest="1"
-                                        Grid.Column="1" Grid.ColumnSpan="5"
-                                        Grid.Row="1"/>
-                            </Grid>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

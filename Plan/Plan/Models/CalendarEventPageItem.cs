@@ -6,12 +6,14 @@ namespace Plan.Models
 {
     public class CalendarEventPageItem
     {
+        public int Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
         public string TimeStartLabel { get; set; }
         public string TimeEndLabel { get; set; }
 
-        public CalendarEventPageItem(string text, string description, string timeStartLabel, string timeEndLabel) { 
+        public CalendarEventPageItem(int id, string text, string description, string timeStartLabel, string timeEndLabel) { 
+            Id = id;
             Text = text;
             Description = description;
             TimeStartLabel = timeStartLabel;

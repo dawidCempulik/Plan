@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plan.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,6 @@ namespace Plan.Views
         public EventCreatorPage()
         {
             InitializeComponent();
-
             Title = "Nowe wydarzenie";
         }
     }
