@@ -36,22 +36,34 @@ namespace Plan.ViewModels
             DayForwardCommand = new Command(async () => await ExecuteDayForwardCommand());
 
             CurrentDate = DateTime.Now.Date;
-            DateLabel = DateTime.Now.ToShortDateString();
+            DateLabel = DateToString(DateTime.Now);
 
             _ = LoadEventsByDay(CurrentDate);
+        }
+
+        private string DateToString(DateTime date)
+        {
+            string day1 = (date.Day < 10 ? "0" : "") + date.Day;
+            string month1 = (date.Month < 10 ? "0" : "") + date.Month;
+
+            return day1 + "." + month1;
         }
 
         private async Task ExecuteDayBackCommand()
         {
             CurrentDate = CurrentDate.AddDays(-1);
-            DateLabel = CurrentDate.ToShortDateString();
-            await LoadEventsByDay(CurrentDate);
+            await UpdateEventsList();
         }
 
         private async Task ExecuteDayForwardCommand()
         {
             CurrentDate = CurrentDate.AddDays(1);
-            DateLabel = CurrentDate.ToShortDateString();
+            await UpdateEventsList();
+        }
+
+        private async Task UpdateEventsList()
+        {
+            DateLabel = DateToString(CurrentDate);
             await LoadEventsByDay(CurrentDate);
         }
 
