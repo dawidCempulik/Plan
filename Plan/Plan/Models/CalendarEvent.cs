@@ -6,21 +6,23 @@ namespace Plan.Models
 {
     public class CalendarEvent
     {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public string Description { get; set; }
+        public DateTime DateTimeStart { get; set; }
+        public DateTime DateTimeEnd { get; set; }
+        public string Repeat { get; set; }
+
         public CalendarEvent() { }
 
-        public CalendarEvent(int id, string text, string description, DateTime dateTime, string repeat)
+        public CalendarEvent(int id, string text, string description, DateTime dateTimeStart, DateTime dateTimeEnd, string repeat)
         {
             Id = id;
             Text = text;
             Description = description;
-            DateTime = dateTime;
+            DateTimeStart = dateTimeStart;
+            DateTimeEnd = dateTimeEnd;
             Repeat = repeat;
         }
-
-        public int Id { get; set; }
-        public string Text { get; set; }
-        public string Description { get; set; }
-        public DateTime DateTime { get; set; }
-        public string Repeat { get; set; }
     }
 }

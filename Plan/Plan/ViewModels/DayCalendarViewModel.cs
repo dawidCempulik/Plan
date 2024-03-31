@@ -1,5 +1,6 @@
 ﻿using Plan.Models;
 using Plan.Services;
+using Plan.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,16 +11,13 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-/*
- * TODO: Add a page for adding events
- */
-
 namespace Plan.ViewModels
 {
     public class DayCalendarViewModel : BaseViewModel
     {
         public Command DayBackCommand { get; }
         public Command DayForwardCommand { get; }
+        public Command AddItemCommand { get; }
 
         private string _dateLabel;
         public string DateLabel { get => _dateLabel; set { SetProperty(ref _dateLabel, value); } }
@@ -34,6 +32,7 @@ namespace Plan.ViewModels
 
             DayBackCommand = new Command(async () => await ExecuteDayBackCommand());
             DayForwardCommand = new Command(async () => await ExecuteDayForwardCommand());
+            AddItemCommand = new Command(async () => await ExecuteAddItemCommand());
 
             CurrentDate = DateTime.Now.Date;
             DateLabel = DateToString(DateTime.Now);
@@ -61,6 +60,11 @@ namespace Plan.ViewModels
             await UpdateEventsList();
         }
 
+        private async Task ExecuteAddItemCommand()
+        {
+            await Shell.Current.GoToAsync(nameof(EventCreatorPage));
+        }
+
         private async Task UpdateEventsList()
         {
             DateLabel = DateToString(CurrentDate);
@@ -76,10 +80,18 @@ namespace Plan.ViewModels
 
             foreach (CalendarEvent item in SelectedEvents)
             {
-                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Text, item.Description, item.DateTime.TimeOfDay.ToString()));
+                CalendarEventsPageList.Add(new CalendarEventPageItem(item.Text, item.Description, TimeToString(item.DateTimeStart), TimeToString(item.DateTimeEnd)));
             }
 
             OnPropertyChanged(nameof(CalendarEventsPageList));
+        }
+
+        private string TimeToString(DateTime date)
+        {
+            string hour = (date.Hour < 10 ? "0" : "") + date.Hour;
+            string minute = (date.Minute < 10 ? "0" : "") + date.Minute;
+
+            return hour + ":" + minute;
         }
     }
 }

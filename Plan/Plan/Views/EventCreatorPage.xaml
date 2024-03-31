@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plan.Views.EventCreatorPage"
+             Shell.PresentationMode="ModalAnimated"
+             xmlns:vm="clr-namespace:Plan.ViewModels"
+             xmlns:model="clr-namespace:Plan.Models"  
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:EventCreatorViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="5">
+            <Label Text="Nowe wydarzenie" FontSize="Title"/>
+            
+            <Label Text="Tekst" FontSize="Medium"/>
+            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
+
+            <Label Text="Opis" FontSize="Medium"/>
+            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+
+            <FlexLayout JustifyContent="SpaceEvenly">
+                <StackLayout>
+                    <Label Text="Od" FontSize="Medium"/>
+                    <TimePicker Time="{Binding TimeStart}"/>
+                    <DatePicker Date="{Binding DateStart, Mode=TwoWay}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Do" FontSize="Medium"/>
+                    <TimePicker Time="{Binding TimeEnd}"/>
+                    <DatePicker Date="{Binding DateEnd, Mode=TwoWay}"/>
+                </StackLayout>
+            </FlexLayout>
+
+            <Label Text="Powtarzać" FontSize="Medium"/>
+            <Label Text="Zimplementowac!"/>
+
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Zapisz" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

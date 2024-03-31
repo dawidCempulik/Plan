@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 
 namespace Plan.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalendarPage : ContentPage
     {
         public CalendarPage()

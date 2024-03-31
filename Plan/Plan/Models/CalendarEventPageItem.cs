@@ -8,12 +8,14 @@ namespace Plan.Models
     {
         public string Text { get; set; }
         public string Description { get; set; }
-        public string TimeLabel { get; set; }
+        public string TimeStartLabel { get; set; }
+        public string TimeEndLabel { get; set; }
 
-        public CalendarEventPageItem(string text, string description, string timeLabel) { 
+        public CalendarEventPageItem(string text, string description, string timeStartLabel, string timeEndLabel) { 
             Text = text;
             Description = description;
-            TimeLabel = timeLabel;
+            TimeStartLabel = timeStartLabel;
+            TimeEndLabel = timeEndLabel;
         }
     }
 }
