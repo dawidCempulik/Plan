@@ -31,8 +31,9 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Plan dnia" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:DayCalendarPage}" />
-        <ShellContent Title="Kalendarz" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:CalendarPage}" />
+        <ShellContent Title="Plan dnia" Icon="icon_planning.png" ContentTemplate="{DataTemplate local:DayCalendarPage}" />
+        <ShellContent Title="Kalendarz" Icon="icon_calendar.png" ContentTemplate="{DataTemplate local:CalendarPage}" />
+        <ShellContent Title="Opcje" Icon="icon_setting.png" ContentTemplate="{DataTemplate local:OptionsPage}" />
     </TabBar>
 
     <!--

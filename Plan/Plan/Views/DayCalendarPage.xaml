@@ -23,9 +23,7 @@
                     WidthRequest="90"
                     HeightRequest="40"
                     Text="&lt;"
-                    Command="{Binding DayBackCommand}"
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="White" />
+                    Command="{Binding DayBackCommand}"/>
 
                 <Label Text="{Binding DateLabel}" />
 
@@ -33,9 +31,7 @@
                     WidthRequest="90"
                     HeightRequest="40"
                     Text=">"
-                    Command="{Binding DayForwardCommand}"
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="White" />
+                    Command="{Binding DayForwardCommand}"/>
             </FlexLayout>
             <ListView ItemsSource="{Binding CalendarEventsPageList}" SelectionMode="None" RowHeight="55">
                 <ListView.ItemTemplate>

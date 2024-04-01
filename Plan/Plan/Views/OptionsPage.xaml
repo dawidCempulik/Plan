@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plan.Views.OptionsPage"
+             xmlns:vm="clr-namespace:Plan.ViewModels"
+             xmlns:model="clr-namespace:Plan.Models"  
+             Title="{Binding Title}"
+             BackgroundColor="#333">
+
+    <ContentPage.BindingContext>
+        <vm:OptionsViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <ScrollView Padding="5">
+            <StackLayout>
+                <Label Text="Manipulacja danymi" FontSize="Medium"/>
+                <Button Text="Import" Command="{Binding ImportCommand}"/>
+                <Button Text="Export" Command="{Binding ExportCommand}"/>
+                <Button Text="Usuń wszystkie wydarzenia" Command="{Binding PurgeCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

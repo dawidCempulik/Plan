@@ -46,9 +46,20 @@ namespace Plan.Services
             }
         }
 
+        public Task<int> InsertMultipleAsync(IEnumerable<CalendarEvent> items)
+        {
+            return Database.InsertAllAsync(items);
+        }
+
         public Task<int> DeleteItemAsync(CalendarEvent item)
         {
             return Database.DeleteAsync(item);
+        }
+
+        public async Task PurgeAllAsync()
+        {
+            await Database.DropTableAsync<CalendarEvent>();
+            await Database.CreateTableAsync<CalendarEvent>();
         }
     }
 }
