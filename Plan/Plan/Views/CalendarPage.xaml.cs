@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static SQLite.TableMapping;
 
 namespace Plan.Views
 {
@@ -18,42 +19,43 @@ namespace Plan.Views
 
             string[] days = { "Pon", "Wt", "Śr", "Czw", "Pt", "Sob", "Nie" };
 
-            for (int column = 0; column < 7; column++)
+
+            for (int row = 0; row < 7; row++)
             {
-
-                weekGrid.Children.Add(new Label
+                StackLayout stack = new StackLayout()
                 {
-                    Text = days[column],
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                }, column + 1, 1);
+                    WidthRequest = weekGrid.RowDefinitions[0].Height.Value,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                };
 
-
-                weekGrid.Children.Add(new BoxView()
+                stack.Children.Add(new Label()
                 {
-                    WidthRequest = 1,
-                    VerticalOptions = LayoutOptions.Fill,
-                    HorizontalOptions = LayoutOptions.End,
-                    Color = Color.LightGray
-                }, column, column + 1, 1, 19);
+                    Text = days[row],
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                });
+
+                weekGrid.Children.Add(stack, 0, row + 1);
             }
 
-            for (int row = 2; row < 19; row++)
+            for (int column = 1; column < 19; column++)
             {
-                weekGrid.Children.Add(new Label()
+                StackLayout stack = new StackLayout()
                 {
-                    Text = (row < 6 ? "0" : "") + (row + 4) + ":00",
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                }, 0, row);
+                    WidthRequest = weekGrid.RowDefinitions[0].Height.Value,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                };
 
-                weekGrid.Children.Add(new BoxView()
+                stack.Children.Add(new Label()
                 {
-                    HeightRequest = 1,
-                    VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    Color = Color.LightGray
-                }, 0, 8, row - 1, row);
+                    Text = (column < 5 ? "0" : "") + (column + 5) + ":00",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                });
+
+                weekGrid.Children.Add(stack, column, 0);
             }
         }
     }
