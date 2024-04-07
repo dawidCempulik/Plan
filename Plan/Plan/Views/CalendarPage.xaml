@@ -31,14 +31,7 @@
                         Command="{Binding WeekForwardCommand}"/>
             </FlexLayout>
             <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Both">
-                <Grid x:Name="weekGrid" Padding="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                    </Grid.RowDefinitions>
-                </Grid>
+                <Grid x:Name="WeekGrid" Padding="5" ColumnSpacing="0" RowSpacing="0"></Grid>
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>

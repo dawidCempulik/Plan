@@ -18,8 +18,10 @@ namespace Plan.ViewModels
         private DateTime dateStart;
         private TimeSpan timeEnd;
         private DateTime dateEnd;
-        private bool removeButtonEnabled;
+        private bool removeButtonVisible;
         private bool[] repeat;
+        private bool repeatCheckbox;
+        private bool multidayCheckbox;
 
         public EventCreatorViewModel()
         {
@@ -30,6 +32,8 @@ namespace Plan.ViewModels
 
             DateStart = DateTime.Now;
             DateEnd = DateTime.Now;
+
+            RepeatCheckbox = true;
 
             repeat = new bool[7];
 
@@ -42,20 +46,29 @@ namespace Plan.ViewModels
             CalendarEventsDatabase database = await CalendarEventsDatabase.Instance;
 
             CalendarEvent calendarEvent = await database.GetItemAsync(id);
+
             Text = calendarEvent.Text;
             Description = calendarEvent.Description;
             TimeStart = calendarEvent.DateTimeStart.TimeOfDay;
             DateStart = calendarEvent.DateTimeStart.Date;
             TimeEnd = calendarEvent.DateTimeEnd.TimeOfDay;
             DateEnd = calendarEvent.DateTimeEnd.Date;
-            bool[] newRepeat = new bool[7];
-            Console.WriteLine(calendarEvent.Repeat + "   " + calendarEvent.Repeat.Length);
-            for (int i = 0; i < calendarEvent.Repeat.Length; i++)
+
+            if (DateStart != dateEnd) MultidayCheckbox = true;
+
+            if (calendarEvent.Repeat.Length > 0)
             {
-                Console.WriteLine(i + "  " + calendarEvent.Repeat[i]);
-                newRepeat[calendarEvent.Repeat[i] - '0'] = true;
+                bool[] newRepeat = new bool[7];
+                for (int i = 0; i < calendarEvent.Repeat.Length; i++)
+                {
+                    newRepeat[calendarEvent.Repeat[i] - '0'] = true;
+                }
+                Repeat = newRepeat;
             }
-            Repeat = newRepeat;
+            else
+            {
+                RepeatCheckbox = false;
+            }
         }
 
         private bool ValidateSave()
@@ -71,7 +84,7 @@ namespace Plan.ViewModels
                 if (value != 0)
                 {
                     SetProperty(ref itemId, value);
-                    RemoveButtonEnabled = true;
+                    RemoveButtonVisible = true;
                     Title = "Edytowanie wydarzenia";
                     _ = LoadItemInfo(ItemId);
                 }
@@ -118,10 +131,10 @@ namespace Plan.ViewModels
             set => SetProperty(ref dateEnd, value);
         }
 
-        public bool RemoveButtonEnabled
+        public bool RemoveButtonVisible
         {
-            get => removeButtonEnabled;
-            set => SetProperty(ref removeButtonEnabled, value);
+            get => removeButtonVisible;
+            set => SetProperty(ref removeButtonVisible, value);
         }
 
         public bool[] Repeat
@@ -129,6 +142,19 @@ namespace Plan.ViewModels
             get => repeat;
             set => SetProperty(ref repeat, value);
         }
+
+        public bool RepeatCheckbox
+        {
+            get => repeatCheckbox;
+            set => SetProperty(ref repeatCheckbox, value);
+        }
+
+        public bool MultidayCheckbox
+        {
+            get => multidayCheckbox;
+            set => SetProperty(ref multidayCheckbox, value);
+        }
+
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -142,15 +168,25 @@ namespace Plan.ViewModels
 
         private async void OnSave()
         {
-            string repeatString = "";
-            for (int i = 0; i < Repeat.Length; i++)
+
+            if (!MultidayCheckbox)
             {
-                bool value = Repeat[i];
-                if (value)
+                DateEnd = DateStart;
+            }
+
+            string repeatString = "";
+            if (RepeatCheckbox)
+            {
+                for (int i = 0; i < Repeat.Length; i++)
                 {
-                    repeatString += i;
+                    bool value = Repeat[i];
+                    if (value)
+                    {
+                        repeatString += i;
+                    }
                 }
             }
+            
 
             CalendarEvent calendarEvent = new CalendarEvent(ItemId, Text, Description, DateStart.Date.Add(TimeStart), DateEnd.Date.Add(TimeEnd), repeatString);
             CalendarEventsDatabase database = await CalendarEventsDatabase.Instance;

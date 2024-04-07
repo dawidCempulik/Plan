@@ -17,6 +17,8 @@ namespace Plan
             // enable multi-threaded database access
             SQLite.SQLiteOpenFlags.SharedCache;
 
+        public static string[] daysOfWeek = { "Pon", "Wt", "Śr", "Czw", "Pt", "Sob", "Nie" };
+
         public static string DatabasePath
         {
             get

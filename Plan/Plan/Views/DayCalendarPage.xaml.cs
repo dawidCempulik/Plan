@@ -22,7 +22,7 @@ namespace Plan.Views
 
         protected override void OnAppearing()
         {
-            _ = ((DayCalendarViewModel)BindingContext).LoadEventsByDay();
+            _ = ((DayCalendarViewModel)BindingContext).LoadEvents();
             base.OnAppearing();
         }
     }

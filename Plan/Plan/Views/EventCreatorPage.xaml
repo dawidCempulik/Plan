@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Plan.Views.EventCreatorPage"
              Shell.PresentationMode="ModalAnimated"
              xmlns:vm="clr-namespace:Plan.ViewModels"
@@ -10,7 +11,13 @@
     <ContentPage.BindingContext>
         <vm:EventCreatorViewModel />
     </ContentPage.BindingContext>
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout Padding="5">
             <Label Text="{Binding Title}" FontSize="Title"/>
@@ -21,6 +28,11 @@
             <Label Text="Opis" FontSize="Medium"/>
             <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
 
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Wydarzenie wielodniowe" FontSize="Medium"/>
+                <CheckBox IsChecked="{Binding MultidayCheckbox, Mode=TwoWay}"/>
+            </StackLayout>
+
             <FlexLayout JustifyContent="SpaceEvenly">
                 <StackLayout>
                     <Label Text="Od" FontSize="Medium"/>
@@ -30,13 +42,16 @@
                 <StackLayout>
                     <Label Text="Do" FontSize="Medium"/>
                     <TimePicker Time="{Binding TimeEnd, Mode=TwoWay}"/>
-                    <DatePicker Date="{Binding DateEnd, Mode=TwoWay}"/>
+                    <DatePicker Date="{Binding DateEnd, Mode=TwoWay}" IsVisible="{Binding MultidayCheckbox}"/>
                 </StackLayout>
             </FlexLayout>
 
-            <Label Text="Powtarzać" FontSize="Medium"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Wydarzenie powtarzające się" FontSize="Medium"/>
+                <CheckBox IsChecked="{Binding RepeatCheckbox, Mode=TwoWay}"/>
+            </StackLayout>
 
-            <FlexLayout JustifyContent="SpaceEvenly">
+            <FlexLayout JustifyContent="SpaceEvenly" IsVisible="{Binding RepeatCheckbox}">
                 <StackLayout>
                     <Label Text="Pon" HorizontalOptions="Center"/>
                     <CheckBox IsChecked="{Binding Repeat[0], Mode=TwoWay}"/>
@@ -72,7 +87,7 @@
                 <Button Text="Zapisz" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
 
-            <Button Text="Usun" Command="{Binding RemoveCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding RemoveButtonEnabled}"/>
+            <Button Text="Usun" Command="{Binding RemoveCommand}" HorizontalOptions="FillAndExpand" IsVisible="{Binding RemoveButtonVisible}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

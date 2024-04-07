@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Plan.Models
 {
-    public class CalendarEventPageItem
+    public class DayCalendarEventPageItem
     {
         public int Id { get; set; }
         public string Text { get; set; }
@@ -12,7 +12,7 @@ namespace Plan.Models
         public string TimeStartLabel { get; set; }
         public string TimeEndLabel { get; set; }
 
-        public CalendarEventPageItem(int id, string text, string description, string timeStartLabel, string timeEndLabel) { 
+        public DayCalendarEventPageItem(int id, string text, string description, string timeStartLabel, string timeEndLabel) { 
             Id = id;
             Text = text;
             Description = description;
