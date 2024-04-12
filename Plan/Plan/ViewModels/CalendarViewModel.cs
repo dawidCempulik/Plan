@@ -15,6 +15,7 @@ namespace Plan.ViewModels
     public class CalendarViewModel : BaseViewModel
     {
         public Grid WeekGrid { get; set; }
+        public int GridCellSize { get; set; }
         public Command WeekBackCommand { get; }
         public Command WeekForwardCommand { get; }
         public Command<int> EventTappedCommand { get; }
@@ -28,6 +29,8 @@ namespace Plan.ViewModels
 
         public CalendarViewModel()
         {
+            GridCellSize = 80;
+
             WeekBackCommand = new Command(async () => await ExecuteWeekBackCommand());
             WeekForwardCommand = new Command(async () => await ExecuteWeekForwardCommand());
             EventTappedCommand = new Command<int>(ExecuteEventTappedCommand);
@@ -143,28 +146,32 @@ namespace Plan.ViewModels
 
             StackLayout stack = new StackLayout()
             {
-                BackgroundColor = Color.Accent,
+                BackgroundColor = (Color)App.Current.Resources["Tertiary"],
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Margin = new Thickness((float)start.Minute / 60 * 88 + 5, 5, (float)end.Minute / 60 * 88 + 5, 5),
+                Padding = 5
             };
 
             stack.Children.Add(new Label
             {
+                LineBreakMode = LineBreakMode.TailTruncation,
                 Text = item.Text,
-                TextColor = Color.White,
-                FontSize = 17
+                TextColor = (Color)App.Current.Resources["OnTertiary"],
+                FontSize = 16
             });
 
             stack.Children.Add(new Label
             {
+                LineBreakMode = LineBreakMode.TailTruncation,
                 Text = item.Description,
-                TextColor = Color.White,
+                TextColor = (Color)App.Current.Resources["OnTertiary"],
             });
 
             stack.SetValue(Grid.RowProperty, gridRow);
             stack.SetValue(Grid.ColumnProperty, gridColumn);
             stack.SetValue(Grid.ColumnSpanProperty, gridColumnSpan);
+            stack.SetValue(Xamarin.CommunityToolkit.Effects.CornerRadiusEffect.CornerRadiusProperty, 10);
 
             stack.GestureRecognizers.Add(new TapGestureRecognizer()
             {
@@ -179,8 +186,6 @@ namespace Plan.ViewModels
 
         private void UpdateGrid()
         {
-            Console.WriteLine("Nowa ilosc: " + LocalPageItemsList.Count);
-
             foreach (StackLayout item in PageItemsList)
             {
                 WeekGrid.Children.Remove(item);
@@ -199,7 +204,6 @@ namespace Plan.ViewModels
             if (id == 0)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
             await Shell.Current.GoToAsync($"{nameof(EventCreatorPage)}?{nameof(EventCreatorViewModel.ItemId)}={id}");
         }
     }

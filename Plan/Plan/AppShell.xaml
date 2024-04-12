@@ -15,15 +15,15 @@
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.ForegroundColor" Value="#333" />
-                <Setter Property="Shell.TitleColor" Value="White" />
-                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="#fff"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource SurfaceContainer}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource OnSurface}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource OnSurface}" />
+                <Setter Property="Shell.DisabledColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.UnselectedColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource SurfaceContainer}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource OnSurface}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Primary}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource OnSurface}"/>
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />

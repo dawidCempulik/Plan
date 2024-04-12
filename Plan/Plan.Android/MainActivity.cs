@@ -16,6 +16,8 @@ namespace Plan.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Plugin.MaterialDesignControls.Android.Renderer.Init();
+            Window.SetStatusBarColor(Android.Graphics.Color.Rgb(33, 31, 38));
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

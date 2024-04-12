@@ -84,10 +84,6 @@ namespace Plan.ViewModels
             try
             {
                 var result = await FilePicker.PickAsync(options);
-                if (result != null)
-                {
-                    
-                }
 
                 return result;
             }

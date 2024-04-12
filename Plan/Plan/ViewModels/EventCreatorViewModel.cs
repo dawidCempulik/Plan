@@ -1,5 +1,7 @@
 ﻿using Plan.Models;
 using Plan.Services;
+using Plugin.MaterialDesignControls;
+using Plugin.MaterialDesignControls.Material3;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,10 +24,10 @@ namespace Plan.ViewModels
         private bool[] repeat;
         private bool repeatCheckbox;
         private bool multidayCheckbox;
+        private bool dateStartVisible;
 
         public EventCreatorViewModel()
         {
-
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             RemoveCommand = new Command(OnRemove);
@@ -73,7 +75,7 @@ namespace Plan.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text);
+            return !String.IsNullOrWhiteSpace(Text);
         }
 
         public int ItemId
@@ -146,13 +148,27 @@ namespace Plan.ViewModels
         public bool RepeatCheckbox
         {
             get => repeatCheckbox;
-            set => SetProperty(ref repeatCheckbox, value);
+            set
+            {
+                DateStartVisible = (!value) || MultidayCheckbox;
+                SetProperty(ref repeatCheckbox, value);
+            }
         }
 
         public bool MultidayCheckbox
         {
             get => multidayCheckbox;
-            set => SetProperty(ref multidayCheckbox, value);
+            set
+            {
+                DateStartVisible = value || (!RepeatCheckbox);
+                SetProperty(ref multidayCheckbox, value);
+            }
+        }
+
+        public bool DateStartVisible
+        {
+            get => dateStartVisible;
+            set => SetProperty(ref dateStartVisible, value);
         }
 
 

@@ -1,38 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Plan.Views.CalendarPage"
              xmlns:vm="clr-namespace:Plan.ViewModels"
              xmlns:model="clr-namespace:Plan.Models"  
+             xmlns:material="clr-namespace:Plugin.MaterialDesignControls.Material3;assembly=Plugin.MaterialDesignControls"
              Title="{Binding Title}"
-             BackgroundColor="#333">
+             BackgroundColor="{StaticResource Surface}">
 
     <ContentPage.BindingContext>
         <vm:CalendarViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
-            <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center">
-                <Button Text="&lt;"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill"
-                        Margin="0,10,0,0"
+        <StackLayout Padding="5">
+            <StackLayout Margin="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         BackgroundColor="{StaticResource SurfaceContainer}" xct:CornerRadiusEffect.CornerRadius="20">
+                <ScrollView Orientation="Both" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+                    <Grid x:Name="WeekGrid" ColumnSpacing="0" RowSpacing="0" ColumnDefinitions="*" RowDefinitions="*">
+                        <StackLayout x:Name="StackHorizontal" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                     Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="24"
+                                     BackgroundColor="{StaticResource Primary}"
+                                     WidthRequest="{Binding GridCellSize}"
+                                     xct:CornerRadiusEffect.CornerRadius="20"
+                                     Margin="0, 0, 0, 10" Spacing="0"/>
+                        <StackLayout x:Name="StackVertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                     Grid.Row="1" Grid.RowSpan="7" Grid.Column="0"
+                                     BackgroundColor="{StaticResource Primary}"
+                                     WidthRequest="{Binding GridCellSize}"
+                                     xct:CornerRadiusEffect.CornerRadius="20"
+                                     Margin="0, 0, 10, 0" Spacing="0"/>
+                    </Grid>
+                </ScrollView>
+            </StackLayout>
+
+            <FlexLayout HeightRequest="60"
+                        JustifyContent="SpaceBetween"
+                        AlignItems="Center" 
+                        HorizontalOptions="Fill" 
+                        BackgroundColor="{StaticResource SurfaceContainer}"
+                        xct:CornerRadiusEffect.CornerRadius="20"
+                        Margin="20">
+                <material:MaterialButton
+                        WidthRequest="90"
+                        HeightRequest="60"
+                        Text="&lt;"
+                        FontSize="20"
                         Command="{Binding WeekBackCommand}"/>
 
-                <Label  Text="{Binding DateRangeLabel}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"/>
+                <material:MaterialLabel Text="{Binding DateRangeLabel}" />
 
-                <Button Text=">"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Fill"
-                        Margin="0,10,0,0" 
+                <material:MaterialButton 
+                        WidthRequest="90"
+                        HeightRequest="60"
+                        Text=">"
+                        FontSize="20"
                         Command="{Binding WeekForwardCommand}"/>
             </FlexLayout>
-            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Both">
-                <Grid x:Name="WeekGrid" Padding="5" ColumnSpacing="0" RowSpacing="0"></Grid>
-            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

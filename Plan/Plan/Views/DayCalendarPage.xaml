@@ -2,72 +2,85 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:material="clr-namespace:Plugin.MaterialDesignControls.Material3;assembly=Plugin.MaterialDesignControls"
              x:Class="Plan.Views.DayCalendarPage"
              xmlns:vm="clr-namespace:Plan.ViewModels"
              xmlns:model="clr-namespace:Plan.Models"  
              Title="{Binding Title}"
-             BackgroundColor="#333">
+             BackgroundColor="{StaticResource Surface}">
 
     <ContentPage.BindingContext>
         <vm:DayCalendarViewModel />
     </ContentPage.BindingContext>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Dodaj" Command="{Binding AddItemCommand}" />
-    </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
         <StackLayout Padding="5">
-            <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center" HorizontalOptions="Fill">
-                <Button
+            <StackLayout Margin="20"
+                         BackgroundColor="{StaticResource SurfaceContainer}"
+                         xct:CornerRadiusEffect.CornerRadius="20"
+                         VerticalOptions="FillAndExpand"
+                         Padding="20, 15, 20, 15">
+                <ListView ItemsSource="{Binding CalendarEventsPageList}" 
+                          SelectionMode="None" 
+                          RowHeight="55">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout>
+                                        <Label  Text="{Binding TimeStartLabel}"
+                                                WidthRequest="50"
+                                                HeightRequest="20"/>
+
+                                        <Label  Text="{Binding TimeEndLabel}"
+                                                WidthRequest="50"
+                                                HeightRequest="20"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label  Text="{Binding Text}" FontSize="Body"
+                                                HeightRequest="20"/>
+
+                                        <Label  Text="{Binding Description}"
+                                                HeightRequest="20"/>
+                                    </StackLayout>
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            NumberOfTapsRequired="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DayCalendarViewModel}}, Path=EventTappedCommand}"		
+                                            CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            
+            <FlexLayout JustifyContent="SpaceBetween" 
+                        AlignItems="Center" 
+                        HorizontalOptions="Fill" 
+                        BackgroundColor="{StaticResource SurfaceContainer}"
+                        xct:CornerRadiusEffect.CornerRadius="20"
+                        Margin="20">
+                <material:MaterialButton
                     WidthRequest="90"
-                    HeightRequest="40"
+                    HeightRequest="60"
                     Text="&lt;"
+                    FontSize="20"
                     Command="{Binding DayBackCommand}"/>
 
-                <Label Text="{Binding DateLabel}" />
+                <material:MaterialLabel Text="{Binding DateLabel}" />
 
-                <Button 
+                <material:MaterialButton 
                     WidthRequest="90"
-                    HeightRequest="40"
+                    HeightRequest="60"
                     Text=">"
+                    FontSize="20"
                     Command="{Binding DayForwardCommand}"/>
             </FlexLayout>
-            <ListView ItemsSource="{Binding CalendarEventsPageList}" SelectionMode="None" RowHeight="55">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <StackLayout>
-                                    <Label  Text="{Binding TimeStartLabel}"
-                                            WidthRequest="50"
-                                            HeightRequest="20"/>
-
-                                    <Label  Text="{Binding TimeEndLabel}"
-                                            WidthRequest="50"
-                                            HeightRequest="20"/>
-                                </StackLayout>
-                                <StackLayout>
-                                    <Label  Text="{Binding Text}" FontSize="Body"
-                                            HeightRequest="20"/>
-
-                                    <Label  Text="{Binding Description}"
-                                            HeightRequest="20"/>
-                                </StackLayout>
-
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        NumberOfTapsRequired="2"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DayCalendarViewModel}}, Path=EventTappedCommand}"		
-                                        CommandParameter="{Binding .}">
-                                    </TapGestureRecognizer>
-                                </StackLayout.GestureRecognizers>
-
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
